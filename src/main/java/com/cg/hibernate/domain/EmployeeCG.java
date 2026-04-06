@@ -1,4 +1,4 @@
-package com.cg.hibernate;
+package com.cg.hibernate.domain;
 
 import java.util.List;
 
@@ -27,7 +27,6 @@ public class EmployeeCG {
 		this.address = address;
 	}
 	
-	
 	public int getId() {
 		return id;
 	}
@@ -39,8 +38,7 @@ public class EmployeeCG {
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
-	
+	}	
 	
 	@Override
 	public String toString() {

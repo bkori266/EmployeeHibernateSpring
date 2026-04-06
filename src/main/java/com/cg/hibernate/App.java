@@ -1,17 +1,18 @@
 package com.cg.hibernate;
-
-
 import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
+
+import com.cg.hibernate.domain.Address;
+import com.cg.hibernate.domain.EmployeeCG;
+import com.cg.hibernate.exception.EmployeeNotFoundException;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.cg.hibernate.exception.EmployeeNotFoundException;
 
 /**
  * Hello world!
@@ -29,11 +30,8 @@ public class App {
 		context=new ClassPathXmlApplicationContext("spring.xml");
 	}
 	
-	
-		
     public static void main(String[] args) {
-    	
-    	
+
     	App a=new App();
     	a.CRUD();
     }
@@ -44,8 +42,8 @@ public class App {
        
        Session session=new Configuration()
     		   			.configure()
-    		   			.addAnnotatedClass(com.cg.hibernate.EmployeeCG.class)
-       		   			.addAnnotatedClass(com.cg.hibernate.Address.class)
+    		   			.addAnnotatedClass(com.cg.hibernate.domain.EmployeeCG.class)
+       		   			.addAnnotatedClass(com.cg.hibernate.domain.Address.class)
     		   			.buildSessionFactory()
     		   			.openSession();
 //       config.configure();

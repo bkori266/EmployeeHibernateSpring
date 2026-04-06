@@ -1,4 +1,4 @@
-package com.cg.hibernate;
+package com.cg.hibernate.domain;
 
 import org.hibernate.annotations.ManyToAny;
 
