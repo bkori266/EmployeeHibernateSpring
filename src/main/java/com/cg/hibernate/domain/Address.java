@@ -1,7 +1,5 @@
 package com.cg.hibernate.domain;
 
-import org.hibernate.annotations.ManyToAny;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,7 +13,6 @@ public class Address {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String street;
-	
 	
 	@ManyToOne
 	private EmployeeCG employeeCG;
