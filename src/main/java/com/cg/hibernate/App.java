@@ -20,7 +20,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class App {
 	private EmployeeCG emp;
 	private Address address;
-	private Address address1;
 	public ApplicationContext context;
 	
 	private Scanner sc;
@@ -30,13 +29,13 @@ public class App {
 		context=new ClassPathXmlApplicationContext("spring.xml");
 	}
 	
-    public static void main(String[] args) {
+    public static void main(String[] args) throws EmployeeNotFoundException {
 
     	App a=new App();
     	a.CRUD();
     }
     
-       public void CRUD() {
+       public void CRUD() throws EmployeeNotFoundException {
     	   int next=0;
     	   int choice=0;
        
@@ -56,7 +55,7 @@ public class App {
        
        do
        {	Transaction transaction=session.beginTransaction();  
-       		emp=(EmployeeCG) context.getBean("employee");
+       		emp=(EmployeeCG) context.getBean("emp1");
        		address=(Address) context.getBean("address");
        		       			
        		System.out.println("1)Insert _______2)ViewById_______3)Update________4)Delete");
@@ -69,20 +68,17 @@ public class App {
        		emp.setName(sc.next());
        		
        		System.out.println("Enter your street: ");
-       		address.setStreet(sc.next());
-       		
-       		System.out.println("Enter your 2nd street: ");
-       		address1.setStreet(sc.next());
-       		
+       		address.setStreet(sc.next());   		
        		
        		emp.setAddress(Arrays.asList(address));
        		address.setEmployeeCG(emp);
        		
        
        		try {
-       		session.persist(address);    		
+       		//session.persist(address); 		
        		session.persist(emp);
-       		transaction.commit();}
+       		transaction.commit();
+       		}
        		catch(Exception e) {System.out.println(e.getMessage());}
        		System.out.println("Saved Successfully");
        		break;
@@ -102,14 +98,21 @@ public class App {
        			
        		case 3:
        			System.out.println("Enter Id:");
-       			
-       			emp.setId(sc.nextInt());
+       			emp=session.find(EmployeeCG.class, sc.nextInt());
+       			if(emp!=null) {
+       					System.out.println("Enter updated name");
+				 		emp.setName(sc.next());
+				 		
+				 		System.out.println("Enter updated address");
+				 		
+				 		emp.setAddress(Arrays.asList());
+				 		
+				 		session.merge(emp);
+				 		transaction.commit();
+       			}
+       			else {throw new EmployeeNotFoundException("No employee found");}
        					
-       				  System.out.println("Enter updated name");
-       				 		emp.setName(sc.next());
-       				 		
-       				 		session.merge(emp);
-       				 		transaction.commit();
+       				  
        				break;
        			   
        		case 4:
@@ -120,7 +123,7 @@ public class App {
        				 if(emp==null) 
        				 {throw new EmployeeNotFoundException("Employee Not found");}
        				 else {
-       					 session.remove(emp.getAddress());
+       					 //session.remove(emp.getAddress());
        					 session.remove(emp);
             			transaction.commit();
             			System.out.println("Employee deleted with "+emp.getId());

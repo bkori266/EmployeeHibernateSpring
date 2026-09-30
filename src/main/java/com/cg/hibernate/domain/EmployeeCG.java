@@ -2,6 +2,7 @@ package com.cg.hibernate.domain;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -17,7 +18,7 @@ public class EmployeeCG {
 	private int id;
 	private String name;
 	
-	@OneToMany(mappedBy = "employeeCG",fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "employeeCG",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
 	private List<Address> address;
 	
 	public List<Address> getAddress() {
